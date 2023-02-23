@@ -8,7 +8,7 @@ npm install
 
 ## Ejecutar el proyecto
 ```
-node index2.js
+nodemon index2.js
 
 npm start
 ```
@@ -17,3 +17,12 @@ npm start
 ```
 http://localhost:3000
 ```
+
+
+## Dependencia de nodemon
+```
+npm install -g nodemon
+npm install express
+npm install cors
+npm install openai
+````

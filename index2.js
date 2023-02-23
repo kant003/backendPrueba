@@ -1,9 +1,17 @@
 let express = require("express")
 // npm install cors
 let cors = require("cors")
+const { Configuration, OpenAIApi } = require("openai");
+
 
 let app = express()
 app.use(cors())
+
+const configuration = new Configuration({
+    apiKey: 'sk-ylu',
+});
+const openai = new OpenAIApi(configuration);
+
 
 function saludar(req, res){
     res.json("hola soy el backend del profe")
@@ -21,11 +29,28 @@ function suma(req, res){
     let resultado = num1+num2
     res.send(resultado+"")
 }
+
+async function getPareja(req, res) {
+
+    const response = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: "Soy un varon de 60 años que habla poco y soy poco atractivo. Dame consejos para encontar pareja.",
+        temperature: 0.9,
+        max_tokens: 150,
+        top_p: 1,
+        frequency_penalty: 0.0,
+        presence_penalty: 0.6,
+      });
+
+    res.send(response.data.choices[0].text)
+}
+
 //http://127.0.0.1:3000/hola
 //http://localhost:3000/hola
 //(profe)     http://10.101.17.22:3000/hola
 app.get("/hola", saludar)
 app.get("/", calcular)
+app.get("/pareja", getPareja)
 
 http://localhost:3000/suma/4/3
 app.get("/suma/:num1/:num2", suma)
