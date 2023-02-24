@@ -8,7 +8,7 @@ let app = express()
 app.use(cors())
 
 const configuration = new Configuration({
-    apiKey: 'sk-ylu',
+    apiKey: 'sk-yl',
 });
 const openai = new OpenAIApi(configuration);
 
@@ -30,11 +30,17 @@ function suma(req, res){
     res.send(resultado+"")
 }
 
+//   http://localhost:3000/pareja?sexo=mujer&edad=20&habla=mucho&guapura=normal
 async function getPareja(req, res) {
+    const sexo = req.query.sexo
+    const edad = req.query.edad
+    const habla = req.query.habla
+    const guapura = req.query.guapura
+
 
     const response = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: "Soy un varon de 60 años que habla poco y soy poco atractivo. Dame consejos para encontar pareja.",
+        prompt: `Soy ${sexo} de ${edad} años que habla ${habla} y soy ${guapura}. Dame consejos para encontrar trabajo.`,
         temperature: 0.9,
         max_tokens: 150,
         top_p: 1,
